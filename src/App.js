@@ -6,6 +6,7 @@ import AccountDetails from './components/AccountDetails';
 import Transcations from './components/Transactions';
 import TabBar from './components/TabBar';
 import Setting from './components/Setting';
+import Profile from './components/Profile';
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/test" element={<Setting />} />
         <Route path="/home" element={<> <TabBar /> <AccountDetails /> <Transcations /> </>} />
         <Route path="/" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
