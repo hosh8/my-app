@@ -1,12 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
-import Dashboard from './components/Dashboard';
+import Login from './components/Login';
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import AccountDetails from './components/AccountDetails';
+import Transcations from './components/Transactions';
+import TabBar from './components/TabBar';
+
+
 
 function App() {
   return (
-    <div>
-      <Dashboard></Dashboard>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/test" element={< />} /> */}
+        <Route path="/home" element={<> <TabBar /> <AccountDetails /> <Transcations /> </>} />
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
