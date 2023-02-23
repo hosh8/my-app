@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm, message, Input, Form, Modal, DatePicker, InputNumber } from 'antd';
 import axios from 'axios';
 import { PlusOutlined } from '@ant-design/icons';
+import moment from "moment";
 
 function Transactions() {
     const [form] = Form.useForm();
@@ -18,6 +19,7 @@ function Transactions() {
             });
     }, []);
 
+
     const handleDelete = (record) => {
         axios.delete(`https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json${record.id}`)
             .then(response => {
@@ -31,18 +33,6 @@ function Transactions() {
     };
     const onFinish = (values) => {
         console.log('Success:', values);
-        // axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
-        //     .then(response => {
-        //         setData([...data, response.data]);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         message.error('Failed to add transaction!');
-        //     });
-        setModalVisible(false);
-    };
-    const handleAdd = (values) => {
-        console.log('Success:', values);
         axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
             .then(response => {
                 setData([...data, response.data]);
@@ -53,6 +43,18 @@ function Transactions() {
             });
         setModalVisible(false);
     };
+    // const handleAdd = (values) => {
+    //     console.log('Success:', values);
+    //     axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
+    //         .then(response => {
+    //             setData([...data, response.data]);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             message.error('Failed to add transaction!');
+    //         });
+    //     setModalVisible(false);
+    // };
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -78,6 +80,7 @@ function Transactions() {
             title: 'Date',
             dataIndex: 'Date',
             key: 'Date',
+            render: (text) => <span>{moment(text).format("DD/MM/YYYY")}</span>,
         },
         {
             title: 'Transaction Amount',
@@ -117,10 +120,11 @@ function Transactions() {
             }} />
             <Modal
                 open={modalVisible}
+                onCancel={handleCancel}
                 title="Add new transaction"
-                footer= "null"
+                footer= {null}
                 >
-            <Form onFinish={onFinish}>
+            <Form onFinish={onFinish} Form preserve={false}>
                 <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item>
