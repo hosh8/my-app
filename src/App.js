@@ -5,7 +5,9 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import TabBar from './components/TabBar';
 import Setting from './components/Setting';
 import Profile from './components/Profile';
+import Transactions from './components/Transactions';
 import { Space } from 'antd';
+
 
 
 
