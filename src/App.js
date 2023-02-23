@@ -16,10 +16,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<Header />} />
-        <Route path="/home" element={<> <TabBar /> <Space></Space> <Setting /></>} />
+        {/* <Route path="/test" element={<Header />} /> */}
+        <Route path="/home" element={<> <Header /> <TabBar /> </>} />
         <Route path="/" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<> <Header /> <Profile /> </>} />
       </Routes>
     </BrowserRouter>
   );

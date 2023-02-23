@@ -15,12 +15,12 @@ function Setting() {
 
     const menu = (
         <Menu> 
-            <Menu.Item key="1" onClick={handleProfile} style={{ fontSize: 23}}>
-                <ProfileOutlined fontSize="28"/> <Space></Space>
+            <Menu.Item key="1" onClick={handleProfile} style={{ fontSize: 20}}>
+                <ProfileOutlined fontSize="25"/> <Space></Space>
                 Profile
             </Menu.Item>
-            <Menu.Item key="2" onClick={handleLogout} style={{ fontSize: 23}}>
-                <LogoutOutlined fontSize="28" /> <Space></Space>
+            <Menu.Item key="2" onClick={handleLogout} style={{ fontSize: 20}}>
+                <LogoutOutlined fontSize="25" /> <Space></Space>
                 Logout
             </Menu.Item>
         </Menu>
