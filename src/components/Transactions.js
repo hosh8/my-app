@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm, message, Input, Form, Modal, DatePicker, InputNumber } from 'antd';
 import axios from 'axios';
 import { PlusOutlined } from '@ant-design/icons';
+import moment from "moment";
 
 function Transactions() {
     const [form] = Form.useForm();
@@ -18,6 +19,7 @@ function Transactions() {
             });
     }, []);
 
+
     const handleDelete = (record) => {
         axios.delete(`https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json${record.id}`)
             .then(record => {
@@ -29,6 +31,7 @@ function Transactions() {
                 message.error('Failed to delete user!');
             });
     };
+
     // const onFinish = (values) => {
     //     console.log('Success:', values);
     //     axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
@@ -54,8 +57,19 @@ function Transactions() {
             console.error(error);
             message.error('Failed to add transaction!');
         }
-        setModalVisible(false);
-    };
+
+    // const handleAdd = (values) => {
+    //     console.log('Success:', values);
+    //     axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
+    //         .then(response => {
+    //             setData([...data, response.data]);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             message.error('Failed to add transaction!');
+    //         });
+    //     setModalVisible(false);
+    // };
 
     // const handleAdd = (values) => {
     //     console.log('Success:', values);
@@ -94,6 +108,7 @@ function Transactions() {
             title: 'Date',
             dataIndex: 'Date',
             key: 'Date',
+            render: (text) => <span>{moment(text).format("DD/MM/YYYY")}</span>,
         },
         {
             title: 'Transaction Amount',
@@ -133,9 +148,9 @@ function Transactions() {
             }} />
             <Modal
                 open={modalVisible}
+                onCancel={handleCancel}
                 title="Add new transaction"
                 footer={null}
-                onCancel={handleCancel}
             >
                 <Form form={form} onFinish={onFinish}>
                     <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
@@ -157,6 +172,30 @@ function Transactions() {
                     </Form.Item>
                 </Form>
             </Modal >
+
+                footer= {null}
+                >
+            <Form onFinish={onFinish} Form preserve={false}>
+                <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="Date" label="Date" rules={[{ required: true }]}>
+                    <DatePicker />
+                </Form.Item>
+                <Form.Item name="transaction amount" label="Transaction Amount" rules={[{ required: true }]}>
+                    <InputNumber />
+                </Form.Item>
+                <Form.Item name="comment" label="Comment">
+                    <Input />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Submit
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Modal >
+
         </>
     );
 }
