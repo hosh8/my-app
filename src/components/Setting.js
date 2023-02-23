@@ -13,23 +13,22 @@ function Setting() {
         navigate('/profile');
     }
 
-
     const menu = (
-        <Menu>
-            <Menu.Item key="1" onClick={handleProfile}>
-                <ProfileOutlined /> <Space></Space>
+        <Menu> 
+            <Menu.Item key="1" onClick={handleProfile} style={{ fontSize: 23}}>
+                <ProfileOutlined fontSize="28"/> <Space></Space>
                 Profile
             </Menu.Item>
-            <Menu.Item key="2" onClick={handleLogout}>
-                <LogoutOutlined /> <Space></Space>
+            <Menu.Item key="2" onClick={handleLogout} style={{ fontSize: 23}}>
+                <LogoutOutlined fontSize="28" /> <Space></Space>
                 Logout
             </Menu.Item>
         </Menu>
     );
 
     return (
-        <Dropdown overlay={menu} trigger={['click']} placement="topRight" >
-            <Button type="text" icon={<SettingOutlined />} />
+        <Dropdown overlay={menu} trigger={['click']}>
+            <Button type="text"  icon={<SettingOutlined style={{ fontSize: 27, color: 'white' }} />} />
         </Dropdown>
     );
 };

@@ -6,6 +6,7 @@ import TabBar from './components/TabBar';
 import Setting from './components/Setting';
 import Profile from './components/Profile';
 import { Space } from 'antd';
+import Header from './components/Header';
 
 
 
@@ -13,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={ <Setting />} />
+        <Route path="/test" element={<Header />} />
         <Route path="/home" element={<> <TabBar /> <Space></Space> <Setting /></>} />
         <Route path="/" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
