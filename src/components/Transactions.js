@@ -47,7 +47,7 @@ function Transactions() {
     // };
 
     const onFinish = async (values) => {
-        console.log('Success:',values);
+        console.log('Success:', values);
         try {
             const response = await axios.post("https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json", values);
             console.log(response.data); // This should contain the newly created row from the backend
@@ -57,6 +57,7 @@ function Transactions() {
             console.error(error);
             message.error('Failed to add transaction!');
         }
+    }
 
     // const handleAdd = (values) => {
     //     console.log('Success:', values);
@@ -172,30 +173,6 @@ function Transactions() {
                     </Form.Item>
                 </Form>
             </Modal >
-
-                footer= {null}
-                >
-            <Form onFinish={onFinish} Form preserve={false}>
-                <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name="Date" label="Date" rules={[{ required: true }]}>
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item name="transaction amount" label="Transaction Amount" rules={[{ required: true }]}>
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item name="comment" label="Comment">
-                    <Input />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </Modal >
-
         </>
     );
 }
