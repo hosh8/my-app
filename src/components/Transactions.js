@@ -20,7 +20,7 @@ function Transactions() {
 
     const handleDelete = (record) => {
         axios.delete(`https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json${record.id}`)
-            .then(response => {
+            .then(record => {
                 message.success('User deleted successfully!');
                 setData(data.filter(item => item.id !== record.id));
             })
@@ -29,30 +29,46 @@ function Transactions() {
                 message.error('Failed to delete user!');
             });
     };
-    const onFinish = (values) => {
-        console.log('Success:', values);
-        // axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
-        //     .then(response => {
-        //         setData([...data, response.data]);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         message.error('Failed to add transaction!');
-        //     });
+    // const onFinish = (values) => {
+    //     console.log('Success:', values);
+    //     axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
+    //         .then(response => {
+    //             setData([...data, response.data]);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             message.error('Failed to add transaction!');
+    //         });
+    //     form.resetFields();
+    //     setModalVisible(false);
+    // };
+
+    const onFinish = async (values) => {
+        console.log('Success:',values);
+        try {
+            const response = await axios.post("https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json", values);
+            console.log(response.data); // This should contain the newly created row from the backend
+            setData([...data, response.data]); // Add the new row to the table data
+            form.resetFields();
+        } catch (error) {
+            console.error(error);
+            message.error('Failed to add transaction!');
+        }
         setModalVisible(false);
     };
-    const handleAdd = (values) => {
-        console.log('Success:', values);
-        axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
-            .then(response => {
-                setData([...data, response.data]);
-            })
-            .catch(error => {
-                console.log(error);
-                message.error('Failed to add transaction!');
-            });
-        setModalVisible(false);
-    };
+
+    // const handleAdd = (values) => {
+    //     console.log('Success:', values);
+    //     axios.post('https://gist.githubusercontent.com/hosh8/53792f3f6d7c1086e68419b82d32d4cf/raw/6b9f502dd54b3467cbb101f1862fae992d7bfdf2/ScheduledTransactions.json', JSON.stringify(values))
+    //         .then(response => {
+    //             setData([...data, response.data]);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             message.error('Failed to add transaction!');
+    //         });
+    //     setModalVisible(false);
+    // };
 
     const handleCancel = () => {
         setModalVisible(false);
@@ -118,28 +134,29 @@ function Transactions() {
             <Modal
                 open={modalVisible}
                 title="Add new transaction"
-                footer= "null"
-                >
-            <Form onFinish={onFinish}>
-                <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
-                    <Input />
-                </Form.Item>
-                <Form.Item name="Date" label="Date" rules={[{ required: true }]}>
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item name="transaction amount" label="Transaction Amount" rules={[{ required: true }]}>
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item name="comment" label="Comment">
-                    <Input />
-                </Form.Item>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
-        </Modal >
+                footer={null}
+                onCancel={handleCancel}
+            >
+                <Form form={form} onFinish={onFinish}>
+                    <Form.Item name="AccountID" label="Bank Account ID" rules={[{ required: true }]}>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item name="Date" label="Date" rules={[{ required: true }]}>
+                        <DatePicker />
+                    </Form.Item>
+                    <Form.Item name="transaction amount" label="Transaction Amount" rules={[{ required: true }]}>
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item name="comment" label="Comment">
+                        <Input />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal >
         </>
     );
 }
